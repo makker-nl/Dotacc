@@ -1,0 +1,25 @@
+
+Creating sequence DOE_EMP_SEQ
+=============================
+
+sequence DOE_OWNER.DOE_EMP_SEQ created.
+
+Creating sequence DOE_FNC_SEQ
+=============================
+
+sequence DOE_OWNER.DOE_FNC_SEQ created.
+
+Creating sequence DOE_IAY_SEQ
+=============================
+
+sequence DOE_OWNER.DOE_IAY_SEQ created.
+
+Creating sequence DOE_MAY_SEQ
+=============================
+
+sequence DOE_OWNER.DOE_MAY_SEQ created.
+
+Creating sequence DOE_MTL_SEQ
+=============================
+
+sequence DOE_OWNER.DOE_MTL_SEQ created.
