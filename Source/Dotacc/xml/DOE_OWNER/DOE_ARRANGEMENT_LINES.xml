@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<TableDefinition>
+  <Name>DOE_ARRANGEMENT_LINES</Name>
+  <ShortName>DOE_ARRANGEMENT_LINES</ShortName>
+  <Columns>
+    <Column>
+      <ColName>ID</ColName>
+      <ColId>1</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+    <Column>
+      <ColName>DESCRIPTION</ColName>
+      <ColId>2</ColId>
+      <DataType>VARCHAR2</DataType>
+      <DataLength>4000</DataLength>
+    </Column>
+    <Column>
+      <ColName>AMOUNT</ColName>
+      <ColId>3</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+    <Column>
+      <ColName>LINE_COSTS</ColName>
+      <ColId>4</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+    <Column>
+      <ColName>ART_ID</ColName>
+      <ColId>5</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+    <Column>
+      <ColName>IAY_ID</ColName>
+      <ColId>6</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+    <Column>
+      <ColName>MAY_ID</ColName>
+      <ColId>7</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+  </Columns>
+  <PrimaryKey>
+    <PrimaryKeyName>DOE_ARL_PK</PrimaryKeyName>
+    <PrimaryKeyColumns>
+      <Column>
+        <Name>ID</Name>
+        <Position>1</Position>
+        <DataType>NUMBER</DataType>
+        <DataLength>22</DataLength>
+      </Column>
+    </PrimaryKeyColumns>
+    <ReferingForeignKeys/>
+  </PrimaryKey>
+  <FkConstraints>
+    <FkConstraint IgnoreConstructor="N" IgnoreIns="N" IgnoreToXml="N">
+      <Owner>DOE_OWNER</Owner>
+      <Name>DOE_ARL_MAY_FK</Name>
+      <Type>R</Type>
+      <TableName>DOE_ARRANGEMENT_LINES</TableName>
+      <TableShortName>DOE_ARRANGEMENT_LINES</TableShortName>
+      <FkType>DETAIL</FkType>
+      <ConstraintColumns>
+        <ConstraintColumn>
+          <ColumnName>MAY_ID</ColumnName>
+          <Position>1</Position>
+        </ConstraintColumn>
+      </ConstraintColumns>
+      <RefConstraint>
+        <Owner>DOE_OWNER</Owner>
+        <Name>DOE_MAY_PK</Name>
+        <Type>P</Type>
+        <TableName>DOE_MATERIAL_AVAILABILITIES</TableName>
+        <ConstraintColumns>
+          <ConstraintColumn>
+            <ColumnName>ID</ColumnName>
+            <Position>1</Position>
+          </ConstraintColumn>
+        </ConstraintColumns>
+      </RefConstraint>
+    </FkConstraint>
+    <FkConstraint IgnoreConstructor="N" IgnoreIns="N" IgnoreToXml="N">
+      <Owner>DOE_OWNER</Owner>
+      <Name>DOE_ARL_ART_FK</Name>
+      <Type>R</Type>
+      <TableName>DOE_ARRANGEMENT_LINES</TableName>
+      <TableShortName>DOE_ARRANGEMENT_LINES</TableShortName>
+      <FkType>DETAIL</FkType>
+      <ConstraintColumns>
+        <ConstraintColumn>
+          <ColumnName>ART_ID</ColumnName>
+          <Position>1</Position>
+        </ConstraintColumn>
+      </ConstraintColumns>
+      <RefConstraint>
+        <Owner>DOE_OWNER</Owner>
+        <Name>DOE_ART_PK</Name>
+        <Type>P</Type>
+        <TableName>DOE_ARRANGEMENTS</TableName>
+        <TableShortName>DOE_ARRANGEMENTS</TableShortName>
+        <ConstraintColumns>
+          <ConstraintColumn>
+            <ColumnName>ID</ColumnName>
+            <Position>1</Position>
+          </ConstraintColumn>
+        </ConstraintColumns>
+      </RefConstraint>
+    </FkConstraint>
+    <FkConstraint IgnoreConstructor="N" IgnoreIns="N" IgnoreToXml="N">
+      <Owner>DOE_OWNER</Owner>
+      <Name>DOE_ARL_IAY_FK</Name>
+      <Type>R</Type>
+      <TableName>DOE_ARRANGEMENT_LINES</TableName>
+      <TableShortName>DOE_ARRANGEMENT_LINES</TableShortName>
+      <FkType>DETAIL</FkType>
+      <ConstraintColumns>
+        <ConstraintColumn>
+          <ColumnName>IAY_ID</ColumnName>
+          <Position>1</Position>
+        </ConstraintColumn>
+      </ConstraintColumns>
+      <RefConstraint>
+        <Owner>DOE_OWNER</Owner>
+        <Name>DOE_IAY_PK</Name>
+        <Type>P</Type>
+        <TableName>DOE_INSTRUCTOR_AVAILABILITIES</TableName>
+        <ConstraintColumns>
+          <ConstraintColumn>
+            <ColumnName>ID</ColumnName>
+            <Position>1</Position>
+          </ConstraintColumn>
+        </ConstraintColumns>
+      </RefConstraint>
+    </FkConstraint>
+  </FkConstraints>
+  <DerivedColumns/>
+  <CustomMethods>
+    <CustomMethod>
+      <typeName>DOE_ARRANGEMENT_LINES_COLL</typeName>
+      <methodName>sum_amount</methodName>
+      <methodComment>-- Summarize amount in Arrangement Lines</methodComment>
+      <methodSpecification>function sum_amount 
+  return number</methodSpecification>
+      <methodDeclaration>function sum_amount 
+  return number
+  is
+    l_result number := 0;
+  begin
+    if self.ARRANGEMENT_LINES is not null and self.ARRANGEMENT_LINES.count &gt; 0 then
+      for l_idx in self.ARRANGEMENT_LINES.first..self.ARRANGEMENT_LINES.last
+        loop
+          l_result := l_result + self.ARRANGEMENT_LINES(l_idx).amount;
+        end loop;
+    end if;
+    return l_result;
+  end sum_amount;</methodDeclaration>
+    </CustomMethod>
+  </CustomMethods>
+</TableDefinition>

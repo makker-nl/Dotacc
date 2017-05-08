@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<TableDefinition>
+  <Name>DOE_ARRANGEMENTS</Name>
+  <ShortName>DOE_ARRANGEMENTS</ShortName>
+  <Columns>
+    <Column>
+      <ColName>ID</ColName>
+      <ColId>1</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+    <Column>
+      <ColName>DESCRIPTION</ColName>
+      <ColId>2</ColId>
+      <DataType>VARCHAR2</DataType>
+      <DataLength>4000</DataLength>
+    </Column>
+    <Column>
+      <ColName>TOTAL_COSTS</ColName>
+      <ColId>3</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+    <Column>
+      <ColName>CMR_ID</ColName>
+      <ColId>4</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+    <Column>
+      <ColName>ARP_ID</ColName>
+      <ColId>5</ColId>
+      <DataType>NUMBER</DataType>
+      <DataLength>22</DataLength>
+    </Column>
+  </Columns>
+  <PrimaryKey>
+    <PrimaryKeyName>DOE_ART_PK</PrimaryKeyName>
+    <PrimaryKeyColumns>
+      <Column>
+        <Name>ID</Name>
+        <Position>1</Position>
+        <DataType>NUMBER</DataType>
+        <DataLength>22</DataLength>
+      </Column>
+    </PrimaryKeyColumns>
+    <ReferingForeignKeys>
+      <ReferingForeignKey IgnoreConstructor="N" IgnoreIns="N" IgnoreToXml="N">
+        <Owner>DOE_OWNER</Owner>
+        <Name>DOE_ARL_ART_FK</Name>
+        <Type>R</Type>
+        <TableName>DOE_ARRANGEMENT_LINES</TableName>
+        <TableShortName>DOE_ARRANGEMENT_LINES</TableShortName>
+        <RefConstraintName>DOE_ART_PK</RefConstraintName>
+        <RefConstraintOwner>DOE_OWNER</RefConstraintOwner>
+        <ConstraintColumns>
+          <ConstraintColumn>
+            <ColumnName>ART_ID</ColumnName>
+            <Position>1</Position>
+          </ConstraintColumn>
+        </ConstraintColumns>
+      </ReferingForeignKey>
+    </ReferingForeignKeys>
+  </PrimaryKey>
+  <FkConstraints>
+    <FkConstraint IgnoreConstructor="N" IgnoreIns="N" IgnoreToXml="N">
+      <Owner>DOE_OWNER</Owner>
+      <Name>DOE_ART_CMR_FK</Name>
+      <Type>R</Type>
+      <TableName>DOE_ARRANGEMENTS</TableName>
+      <TableShortName>DOE_ARRANGEMENTS</TableShortName>
+      <FkType>DETAIL</FkType>
+      <ConstraintColumns>
+        <ConstraintColumn>
+          <ColumnName>CMR_ID</ColumnName>
+          <Position>1</Position>
+        </ConstraintColumn>
+      </ConstraintColumns>
+      <RefConstraint>
+        <Owner>DOE_OWNER</Owner>
+        <Name>DOE_CMR_PK</Name>
+        <Type>P</Type>
+        <TableName>DOE_CUSTOMERS</TableName>
+        <TableShortName>DOE_CUSTOMERS</TableShortName>
+        <ConstraintColumns>
+          <ConstraintColumn>
+            <ColumnName>ID</ColumnName>
+            <Position>1</Position>
+          </ConstraintColumn>
+        </ConstraintColumns>
+      </RefConstraint>
+    </FkConstraint>
+    <FkConstraint IgnoreConstructor="N" IgnoreIns="N" IgnoreToXml="N">
+      <Owner>DOE_OWNER</Owner>
+      <Name>DOE_ART_ARP_FK</Name>
+      <Type>R</Type>
+      <TableName>DOE_ARRANGEMENTS</TableName>
+      <TableShortName>DOE_ARRANGEMENTS</TableShortName>
+      <FkType>DETAIL</FkType>
+      <ConstraintColumns>
+        <ConstraintColumn>
+          <ColumnName>ARP_ID</ColumnName>
+          <Position>1</Position>
+        </ConstraintColumn>
+      </ConstraintColumns>
+      <RefConstraint>
+        <Owner>DOE_OWNER</Owner>
+        <Name>DOE_ARP_PK</Name>
+        <Type>P</Type>
+        <TableName>DOE_ARRANGEMENT_TYPES</TableName>
+        <TableShortName>DOE_ARRANGEMENT_TYPES</TableShortName>
+        <ConstraintColumns>
+          <ConstraintColumn>
+            <ColumnName>ID</ColumnName>
+            <Position>1</Position>
+          </ConstraintColumn>
+        </ConstraintColumns>
+      </RefConstraint>
+    </FkConstraint>
+  </FkConstraints>
+  <DerivedColumns/>
+  <CustomMethods>
+    <CustomMethod>
+      <typeName>DOE_ARRANGEMENTS_TYPE</typeName>
+      <methodName>calc_total_amount</methodName>
+      <methodComment>-- Calculate total costs</methodComment>
+      <methodSpecification>procedure calc_total_amount</methodSpecification>
+      <methodDeclaration>procedure calc_total_amount 
+  is
+    l_total_amount number:=0;
+  begin
+    l_total_amount := ARRANGEMENT_LINES.sum_amount;
+    self.total_costs := l_total_amount;
+  end calc_total_amount;</methodDeclaration>
+    </CustomMethod>
+  </CustomMethods>
+</TableDefinition>
