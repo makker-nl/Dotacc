@@ -6,5 +6,5 @@
 @@tables/xxx_logs.sql
 @@tables/xxx_objects.sql
 @@tables/xxx_xmldocuments.sql
-exit
+//exit
 

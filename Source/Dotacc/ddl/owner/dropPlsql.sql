@@ -15,4 +15,4 @@ prompt drop package xxx_obj
 drop package xxx_obj;
 prompt drop package xxx_gen_objects
 drop package xxx_gen_objects;
-exit
+--exit

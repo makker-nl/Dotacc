@@ -19,7 +19,7 @@ IS
   g_obj_type_tps CONSTANT ident_type := 'TYPE';
   g_obj_type_tpb CONSTANT ident_type := 'TYPE BODY';
   --
-  g_xsl_language CONSTANT VARCHAR2(2)      := 'EN';
+  g_xsl_language VARCHAR2(2)      := 'NL';
   g_xsl_CreateObjectType file_name         := 'CreateObjectTypeNL_2.0.xsl';
   g_xsl_CreateObjectTypeBody file_name     := 'CreateObjectTypeBodyNL_2.0.xsl';
   g_xsl_CreateTblObjectType file_name      := 'CreateObjectTable_1.0.xsl';

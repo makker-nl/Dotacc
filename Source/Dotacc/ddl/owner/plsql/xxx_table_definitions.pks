@@ -16,10 +16,12 @@ IS
   g_obj_type_prefix              CONSTANT ident_type := '';
   --g_obj_type_suffix              CONSTANT ident_type := '_TYPE';
   g_obj_type_suffix              CONSTANT ident_type := '_T';
-  g_obj_tbl_prefix              CONSTANT ident_type := 'T';
+  --g_obj_tbl_prefix              CONSTANT ident_type := 'T';
+  g_obj_tbl_prefix              CONSTANT ident_type := '';
   --g_obj_tbl_suffix              CONSTANT ident_type := '_TBL';
   g_obj_tbl_suffix              CONSTANT ident_type := '_TAB';
-  g_obj_coll_prefix              CONSTANT ident_type := 'T';
+  --g_obj_coll_prefix              CONSTANT ident_type := 'T';
+  g_obj_coll_prefix              CONSTANT ident_type := '';
   g_obj_coll_suffix              CONSTANT ident_type := '_COL';
   --
   -- Get short name of table

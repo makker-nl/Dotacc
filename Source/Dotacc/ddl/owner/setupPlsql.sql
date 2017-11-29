@@ -23,4 +23,4 @@ prompt create package xxx_obj
 prompt create package xxx_gen_objects
 @plsql/xxx_gen_objects.pks
 @plsql/xxx_gen_objects.pkb
-exit
+//exit

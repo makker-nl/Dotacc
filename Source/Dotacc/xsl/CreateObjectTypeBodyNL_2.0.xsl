@@ -15,7 +15,7 @@
   <!-- Apostrophe  -->
   <xsl:variable name="apos" select='"&apos;"'/>
   <!-- table prefix length-->
-  <xsl:variable name="tblPrefixLength" select="number(4)"/>
+  <xsl:variable name="tblPrefixLength" select="number(5)"/>
  <!-- Member Names -->
   <xsl:variable name="insertMemberName" select="'ins'"/>
   <xsl:variable name="updateMemberName" select="'upd'"/>
@@ -456,7 +456,7 @@
     <xsl:if test="$ignoreIns='N' or string-length($ignoreIns) = 0">
       <xsl:variable name="constraintName">
         <xsl:call-template name="toLowerCase">
-          <xsl:with-param name="text" select="./Name/text()"/>
+          <xsl:with-param name="text" select="substring(./Name/text(), $tblPrefixLength+1)"/>    
         </xsl:call-template>
       </xsl:variable>
       <xsl:variable name="tableName">
@@ -818,7 +818,14 @@
     <!-- Generate a Custom Method -->
   <xsl:template name="CustomMethod" match="CustomMethods/CustomMethod" >
     <xsl:value-of select="concat($newLine,'  ', methodComment)"/>
-    <xsl:value-of select="concat($newLine,'  member ' , methodDeclaration, $newLine)"/>
+    <xsl:choose>
+      <xsl:when test="isStatic='Y'">
+        <xsl:value-of select="concat($newLine,' static ', methodDeclaration, $newLine)"/>        
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat($newLine,' member ' , methodDeclaration, $newLine)"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <!-- to LowerCase -->
   <xsl:template name="toLowerCase"  >

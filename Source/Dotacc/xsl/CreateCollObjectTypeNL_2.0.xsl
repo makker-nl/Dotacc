@@ -16,7 +16,7 @@
   <!-- space -->
   <xsl:variable name="space" select="' '"/>
   <!-- table prefix length-->
-  <xsl:variable name="tblPrefixLength" select="number(4)"/>
+  <xsl:variable name="tblPrefixLength" select="number(5)"/>
   <!-- Member Names -->
   <xsl:variable name="insertMemberName" select="'ins'"/>
   <xsl:variable name="updateMemberName" select="'upd'"/>
@@ -189,7 +189,7 @@
   </xsl:template>
   <!-- Methods to set the FK Columns on all members of the collection -->
   <xsl:template name="SetFKColDecl" match="FkConstraint" mode="SetFKColDecl">
-    <xsl:variable name="constraintName" select="./Name/text()"/>
+    <xsl:variable name="constraintName" select="substring(./Name/text(), $tblPrefixLength+1)"/>    
     <xsl:variable name="memberName">
       <xsl:call-template name="toLowerCase">
         <xsl:with-param name="text"  select="concat('set_', $constraintName)"/>

@@ -60,5 +60,5 @@ begin
   drop_sequence('XXX_LOG_ID_SEQ');
 end;
 /
-exit
+--exit
 

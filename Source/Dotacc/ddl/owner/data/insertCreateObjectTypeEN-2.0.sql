@@ -239,7 +239,14 @@ declare
     <!-- Generate a Custom Method -->
   <xsl:template name="CustomMethod" match="CustomMethods/CustomMethod" >
     <xsl:value-of select="concat($newLine, methodComment)"/>
-    <xsl:value-of select="concat($newLine,', member ' , methodSpecification)"/>
+    <xsl:choose>
+      <xsl:when test="isStatic='Y'">
+        <xsl:value-of select="concat($newLine,', static ', methodSpecification)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat($newLine,', member ', methodSpecification)"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <!-- to LowerCase -->
   <xsl:template name="toLowerCase"  >

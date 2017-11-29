@@ -20,7 +20,7 @@ declare
   <!-- space -->
   <xsl:variable name="space" select="' '"/>
   <!-- table prefix length-->
-  <xsl:variable name="tblPrefixLength" select="number(4)"/>
+  <xsl:variable name="tblPrefixLength" select="number(5)"/>
   <!-- Member Names -->
   <xsl:variable name="insertMemberName" select="'ins'"/>
   <xsl:variable name="updateMemberName" select="'upd'"/>
@@ -193,7 +193,7 @@ declare
   </xsl:template>
   <!-- Methods to set the FK Columns on all members of the collection -->
   <xsl:template name="SetFKColDecl" match="FkConstraint" mode="SetFKColDecl">
-    <xsl:variable name="constraintName" select="./Name/text()"/>
+    <xsl:variable name="constraintName" select="substring(./Name/text(), $tblPrefixLength+1)"/>
     <xsl:variable name="memberName">
       <xsl:call-template name="toLowerCase">
         <xsl:with-param name="text"  select="concat('set_', $constraintName)"/>
@@ -204,9 +204,8 @@ declare
     <xsl:apply-templates select="ConstraintColumns/ConstraintColumn[1]" mode="FirstConstructorParameter"/>
     <xsl:apply-templates select="ConstraintColumns/ConstraintColumn[position()>1]" mode="NextConstructorParameters"/>
     <xsl:value-of select="')'"/>
-  </xsl:template>
-}';  
-  l_xsl_content_b clob  := q'{  <!-- insert Method -->
+  </xsl:template>}';  
+  l_xsl_content_b clob  := q'{ <!-- insert Method -->
   <xsl:template name="InsertDecl">
   <xsl:value-of select="concat($newLine, '-- ',$cmtInsertMethod)"/>
     <xsl:value-of select="concat($newLineComma,$memberProcDecl, $insertMemberName)"/>
@@ -261,7 +260,14 @@ declare
     <!-- Generate a Custom Method -->
   <xsl:template name="CustomMethod" match="CustomMethods/CustomMethod"  mode="CustomMethod">
     <xsl:value-of select="concat($newLine, '  ', methodComment)"/>
-    <xsl:value-of select="concat($newLine, ', member ' , methodSpecification)"/>
+    <xsl:choose>
+      <xsl:when test="isStatic='Y'">
+        <xsl:value-of select="concat($newLine,',  static ', methodSpecification)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat($newLine,',  member ', methodSpecification)"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <!-- to LowerCase -->
   <xsl:template name="toLowerCase"  >

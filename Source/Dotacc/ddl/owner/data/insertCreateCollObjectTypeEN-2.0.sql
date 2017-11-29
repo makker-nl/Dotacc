@@ -193,7 +193,7 @@ declare
   </xsl:template>
   <!-- Methods to set the FK Columns on all members of the collection -->
   <xsl:template name="SetFKColDecl" match="FkConstraint" mode="SetFKColDecl">
-    <xsl:variable name="constraintName" select="./Name/text()"/>
+    <xsl:variable name="constraintName" select="substring(./Name/text(), $tblPrefixLength+1)"/>
     <xsl:variable name="memberName">
       <xsl:call-template name="toLowerCase">
         <xsl:with-param name="text"  select="concat('set_', $constraintName)"/>
@@ -261,7 +261,14 @@ declare
     <!-- Generate a Custom Method -->
   <xsl:template name="CustomMethod" match="CustomMethods/CustomMethod"  mode="CustomMethod">
     <xsl:value-of select="concat($newLine, '  ', methodComment)"/>
-    <xsl:value-of select="concat($newLine, ', member ' , methodSpecification)"/>
+    <xsl:choose>
+      <xsl:when test="isStatic='Y'">
+        <xsl:value-of select="concat($newLine,',  static ', methodSpecification)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat($newLine,',  member ', methodSpecification)"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <!-- to LowerCase -->
   <xsl:template name="toLowerCase"  >

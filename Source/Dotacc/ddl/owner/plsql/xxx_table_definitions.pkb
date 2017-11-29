@@ -369,6 +369,7 @@ CREATE OR REPLACE package body xxx_table_definitions is
                                   , xmlforest
                                   ( cmd.type_name as "typeName"
                                   , cmd.method_name as "methodName"
+                                  , cmd.ind_static as "isStatic"
                                   , cmd.method_comment as "methodComment"
                                   , cmd.method_spec as "methodSpecification"
                                   , cmd.method_decl as "methodDeclaration"
